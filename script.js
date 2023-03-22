@@ -64,9 +64,6 @@
 
 
 
-// 👾 Actors and then actions
-// A good rule of thumb is start with the actors and then the actions. What actors do we need? In this case, we need our spaceship and the alien spaceships. An action these ships can take is to attack something. Perhaps a ship object (an actor) could therefore have an attack method (an action).
-
 // A repeating action in the game is that these ships attack each other until one of them has been destroyed. This might necessitate a loop or multiple loops.
 
 
@@ -79,6 +76,7 @@ class Ship{
         this.accuracy = accuracy
     }
     shoot() {
+        console.log(`${this.shipType} is shooting!`)
         //create visual of laser going toward enemy
         //if location of shot === location of enemy, go to hitTarget()
     }
@@ -111,6 +109,11 @@ class ShipFactory {
         const newShip = new Ship(shipType, hull, firepower, accuracy);
         this.shipCollection.push(newShip);
     }
+    warCry() {
+        for (const ship in this.shipCollection) {
+            console.log(this.shipCollection[ship])
+        }
+    }
 }
 
 
@@ -125,7 +128,6 @@ class UssShip extends Ship{
         console.log('game over')
     }
 }
-
 
 
 class AlienShip extends Ship{
@@ -143,9 +145,9 @@ class AlienShip extends Ship{
 let alienFactory = new ShipFactory('alien')
 
 for (i = 0; i < 6; i++){
-    alienFactory.makeNewShip('alien', Math.floor((Math.random() * 6)+2), Math.floor((Math.random() * 4)+2), Math.random())
+    alienFactory.makeNewShip('alien', Math.floor((Math.random() * 6)+2), Math.floor((Math.random() * 4)+2), (Math.random()*.2)+.6)
 }
-console.log(alienFactory.shipCollection)
+//console.log(alienFactory.shipCollection)
 
 
 // Your spaceship, the USS Assembly should have the following properties:
@@ -154,5 +156,7 @@ console.log(alienFactory.shipCollection)
 // accuracy - .7
 let ussFactory = new ShipFactory('uss')
 ussFactory.makeNewShip('uss', 20, 5, .7)
-console.log(ussFactory.shipCollection)
+//console.log(ussFactory.shipCollection)
+
+alienFactory.warCry()
 
