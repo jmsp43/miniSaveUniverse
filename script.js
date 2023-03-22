@@ -1,7 +1,46 @@
 //Needs:
-//Class of USS ship with required properties of hull, firepower, and accuracy
+//Class of USS ship (child of shipFactory) with extra retreat method
 
-//Factory for Alien ships with same required properties but unique (random) values
+class UssShip {
+    constructor() {
+        
+    }
+    retreat() {
+        
+    }
+}
+
+
+class shipFactory {
+    constructor(hull, firepower, accuracy) {
+        this.hull = hull
+        this.firepower = firepower
+        this. accuracy = accuracy
+    }
+    pewPew() {
+        
+    }
+    getShot() {
+        hull--
+        
+        
+    }
+    makeShot() {
+        
+    }
+}
+
+
+//Factory for ships with required properties of hull, firepower, and accuracy, and methods that both alien and uss ships use
+
+class AlienShip {
+    constructor(){
+    //do i need a constructor here? will there be additional properties that an alien ship has that the USS ship doesn't?
+    }
+    //what additional methods do i need?
+}
+
+
 
 //kind of like google chrome dino game except instead of jumping, you pew pew
 //and the ships are coming towards you mad slow in a single file line
