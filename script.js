@@ -46,11 +46,6 @@
 // firepower is the amount of damage done to the hull of the target with a successful hit
 
 // accuracy is the chance between 0 and 1 that the ship will hit its target
-// Your spaceship, the USS Assembly should have the following properties:
-
-// hull - 20
-// firepower - 5
-// accuracy - .7
 
 
 // The alien ships should each have the following ranged properties determined randomly:
@@ -69,21 +64,6 @@
 
 
 
-
-
-// 👾 Where to begin?
-// Read over the specifications. Make sure you understand them. If you do not understand them, try to clarify them for yourself.
-// Plan the game. This is an act of simplification.
-// From these programming principles
-
-// Use pseudo code to get a sketch of your game first.
-// Avoid Creating a YAGNI (You aren't going to need it) - You should not try to add functionality until you need it.
-// Do the simplest thing that could possibly work.
-// Often, beginning something is an act of creative inspiration to find the simplest possible case. The first step is not necessarily a matter of logical deduction. Once you have a few 'clues' you can follow the trail of crumbs to a logical conclusion.
-
-
-
-
 // 👾 Actors and then actions
 // A good rule of thumb is start with the actors and then the actions. What actors do we need? In this case, we need our spaceship and the alien spaceships. An action these ships can take is to attack something. Perhaps a ship object (an actor) could therefore have an attack method (an action).
 
@@ -91,18 +71,16 @@
 
 
 
-
-//Factory for all ships with required properties of hull, firepower, accuracy, and shipType. includes methods that both alien and uss ships use
-class ShipFactory {
-    constructor(hull, firepower, accuracy, shipType) {
+class Ship{
+    constructor(shipType, hull, firepower, accuracy) {
+        this.shipType = shipType;
         this.hull = hull
         this.firepower = firepower
         this.accuracy = accuracy
-        this.shipType = shipType
     }
-    pewPew() {
+    shoot() {
         //create visual of laser going toward enemy
-        //if location of shot === location of enemy, go to makeShot()
+        //if location of shot === location of enemy, go to hitTarget()
     }
     getShot() {
         //hull = hull - firepower of player who shot you
@@ -110,21 +88,35 @@ class ShipFactory {
             //USS ship is destroyed
             console.log('game over')
         }       
-        else if (hull <= 0 && shipType === 'enemy') {
+        else if (hull <= 0 && shipType === 'alien') {
             //enemy ship is destroyed
             //if there are more enemy ships:
                 //give player option to retreat or keep playing
         }
     }
-    makeShot() {
+    hitTarget() {
+        //if shot ship fired hits other ship
     }
 }
 
 
 
+//Factory for all ships with required properties of hull, firepower, accuracy, and shipType. includes methods that both alien and uss ships use
+class ShipFactory {
+    constructor(shipType) {
+        this.shipType = shipType
+        this.shipCollection = []
+    }
+    makeNewShip(shipType, hull, firepower, accuracy) {
+        const newShip = new Ship(shipType, hull, firepower, accuracy);
+        this.shipCollection.push(newShip);
+    }
+}
+
+
 //Class of USS ship (child of shipFactory) with extra retreat method
 
-class UssShip extends ShipFactory {
+class UssShip extends Ship{
     constructor() {
         //are there any properties that USS has that enemy doesn't?
     }
@@ -136,7 +128,7 @@ class UssShip extends ShipFactory {
 
 
 
-class AlienShip extends ShipFactory{
+class AlienShip extends Ship{
     constructor(){
     //do i need a constructor here? will there be additional properties that an alien ship has that the USS ship doesn't?
     }
@@ -144,4 +136,23 @@ class AlienShip extends ShipFactory{
         //continuously inching toward USS
     }
 }
+// hull - between 3and 6
+// firepower - between 2and 4
+// accuracy - between .6and .8
+
+let alienFactory = new ShipFactory('alien')
+
+for (i = 0; i < 6; i++){
+    alienFactory.makeNewShip('alien', Math.floor((Math.random() * 6)+2), Math.floor((Math.random() * 4)+2), Math.random())
+}
+console.log(alienFactory.shipCollection)
+
+
+// Your spaceship, the USS Assembly should have the following properties:
+// hull - 20
+// firepower - 5
+// accuracy - .7
+let ussFactory = new ShipFactory('uss')
+ussFactory.makeNewShip('uss', 20, 5, .7)
+console.log(ussFactory.shipCollection)
 

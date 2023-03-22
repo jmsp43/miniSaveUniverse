@@ -24,12 +24,12 @@ flex-direction: column;
 justify-content: space-around;
 align-items: center;
 }
-.left{
+/* .left{
 
 }
 .right{
     
-}
+} */
 
 .nameBox{
     border: 1px solid black;
@@ -94,5 +94,4 @@ align-items: center;
     font-family: 'Share Tech Mono', monospace;
     font-size: 1.5em;
     box-shadow: 0px 0px 20px 10px white;
-
 }
