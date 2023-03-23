@@ -1,7 +1,6 @@
 ////////// GLOBAL VARIABLES ///////////
 
-
-//setting up canvas, 
+//setting up canvas,
 //ultimate goal is to give this game a pong feel
 const canvasEl = document.querySelector("canvas");
 const canvasWidth = 700;
@@ -17,16 +16,12 @@ const gameCanvas = {
   },
 };
 
-
 const startBtn = document.querySelector(".startBtn");
 const attackBtn = document.querySelector(".attackBtn");
 const retreatBtn = document.querySelector(".retreatBtn");
 const restartBtn = document.querySelector(".restartBtn");
 
-
-
 //////////// CLASSES ////////////
-
 
 //creating class ship that will make all the ships
 class Ship {
@@ -80,7 +75,7 @@ class ShipFactory {
     if (this.shipType === "alien") {
       this.shipCollection.push(newShip);
     }
-      //for the canvas portion that i haven't figured out yet
+    //for the canvas portion that i haven't figured out yet
     // const ctx = gameCanvas.context;
     // if (shipType === "alien") {
     //   ctx.fillStyle = "red";
@@ -92,59 +87,71 @@ class ShipFactory {
   }
 }
 
-
 //////////// FUNCTIONS /////////////
-
 
 function start() {
   gameCanvas.start();
 }
-start();
 
-function aliensAttack() {
+const alienShip = function () {
   for (let i = 0; i < shipCollection.length; i++) {
     if (shipCollection[i].hull > 0) {
-      if (Math.random() < shipCollection[i].accuracy) {
-        console.log("Alien ship has been hit!");
-      } else {
-        console.log("USS missed! Alien can now attack you!");
-        uss1.getShot();
-      }
+      alienShip = shipCollection[i];
     } else {
-      destroyedShips.push(shipCollection[i]);
+      alienShip = shipCollection[i + 1];
     }
+  }
+  return alienShip;
+};
+
+function ussAttacks(alienShip) {
+  if (Math.random() < uss1.accuracy) {
+    window.alert("Direct hit!");
+    alienShip.hull -= uss1.firepower;
+    if (alienShip.hull <= 0 && allAliensDestroyed === false) {
+      window.alert(
+        "Enemy is defeated. Stay and fight more if you dare, click retreat if you want to live."
+      );
+    }
+  } else {
+    window.alert("USS missed! Alien can now attack you!");
+    aliensAttack(alienShip);
   }
 }
 
-//create a function that attacks
-//  shoot() {
-//     console.log(`USS is shooting!`);
-//     if (Math.random() < uss1.accuracy) {
-//       console.log("Direct hit!");
-//       shipCollection[i].hull = shipCollection[i].hull - uss1.firepower;
-//       //alien hull = alien hull - uss firepower
-//     } else {
-//       console.log("USS missed! Alien can now attack you!");
-//       aliensAttack();
-//     }
-//   }
+function aliensAttack(alienShip) {
+  if (alienShip.hull > 0) {
+    if (Math.random() < alienShip.accuracy) {
+      console.log("Alien ship has been hit!");
+    } else {
+      console.log("USS missed! Alien can now attack you!");
+      uss1.takeDamage();
+    }
+  } else {
+    destroyedShips.push(alienShip);
+  }
+}
 
-//create a function that decreases hull when shot
-//   getShot() {
-//     //hull = hull - firepower of player who shot you
-//     if (hull <= 0 && shipType === "uss") {
-//       //USS ship is destroyed
-//       console.log("game over");
-//     } else if (hull <= 0 && shipType === "alien") {
-//       //enemy ship is destroyed
-//       //if there are more enemy ships:
-//       //give player option to retreat or keep playing
-//     }
-//   }
 
+function takeDamage(alienShip) {
+  uss1.hull -= alienShip.firepower;
+  if (uss1.hull <= 0) {
+    window.alert("game over, hull is destroyed");
+  }
+}
+
+function allAliensDestroyed() {
+    if (destroyedShips.length === shipCollection.length) {
+        window.alert('All alien ships are destroyed, you have won the war!')
+        return true
+    } else return false
+}
+
+function retreat() {
+    window.alert(`Coward. Game has ended. You defeated ${destroyedShips.length} ships before chickening out.`)
+}
 
 //////////// creating ships ///////////
-
 
 let alienFactory = new ShipFactory("alien");
 
@@ -172,31 +179,25 @@ for (i = 0; i < 6; i++) {
 
 let destroyedShips = [];
 
-
-
 //////////// EVENT LISTENERS ////////////
-
 
 startBtn.addEventListener("click", function (event) {
   event.preventDefault();
-
+  start();
 
   attackBtn.addEventListener("click", function (event) {
     event.preventDefault();
-    //carry out attack function
-    //if your attack misses, then carry out get shot function
+    ussAttacks(alienShip);
 
-    //if you defeat an alien, give option to retreat
     retreatBtn.addEventListener("click", function (event) {
       event.preventDefault();
-      //carry out retreat method
+        retreat();
     });
-
-    //not liking the way the game is going and want to start fresh? restart
-    restartBtn.addEventListener("click", function (event) {
-      event.preventDefault();
-      location.reload();
-      //refreshes page to start a new game
-    });
+  });
+  //not liking the way the game is going and want to start fresh? restart
+  restartBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    location.reload();
+    //refreshes page to start a new game
   });
 });
