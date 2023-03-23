@@ -1,78 +1,84 @@
 *{
     margin: 0;
     padding: 0;
+    font-family: 'Share Tech Mono', monospace;
 }
 
-canvas{
-    border:3px solid chartreuse;
-    /* background-color: #be32e5; */
-    /* width: 600;
-    height: 400; */
-}
-
-.stats{
-    border: 5px solid red;
-    width: 50px;
-    height: 50px;;
-    box-shadow: 0px 0px 20px 10px white;
-}
-
-/* 
-.bodyContainer{
+body{
+    margin: 20px;
     display: flex;
     justify-content: space-between;
-    height: 100vh;
-    width: 100vw;
-    margin: 0 auto;
-    font-family: 'Share Tech Mono', monospace;
-    background-size: 100%;
     background-color: black;
     color: white;
+}
+
+/* h1,h2,h3 {
+    text-align: center;
 } */
 
-.kills{
-    border: 5px solid red;
-    width: 30vw;
-    height: 20vh;
-    box-shadow: 0px 0px 20px 10px white;
+.notCanvas{
+    padding:100px;
+    float: left;
 }
 
 .ussView{
-width: 50%;
-display: flex;
-flex-direction: column;
-justify-content: space-around;
-align-items: center;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
-/* .left{
-
-}
-.right{
-    
-} */
 
 .ussStats{
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solidblack;
-    width: 15vw;
-    height: 15vh;
+    border: 1px solid orange;
     text-align: center;
     font-size: 1.5em;
-    box-shadow: 0px 0px 20px 10px white;
     border-radius: 2%;
+    margin: 10px;
+}
+
+.alienView{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .alienStats{
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solidblack;
-    width: 15vw;
-    height: 15vh;
+    border: 1px solid purple;
     text-align: center;
-    font-family: 'Share Tech Mono', monospace;
     font-size: 1.5em;
+    margin: 10px;
+}
+
+canvas{
+    border:3px solid chartreuse;
+    /* background-color: #be32e5; */
+    width: 500px;
+    height: 500px;
+    float: right;
+}
+
+button{
+    border: 2px solid red;
+    width: 100px;
+    height: 40px;
+    border-radius: 2px 2px;
+    margin: 5px;
+}
+
+.kills{
+    border: 5px solid red;
+    width: 300px;
+    height: 200px;
     box-shadow: 0px 0px 20px 10px white;
 }
+
+

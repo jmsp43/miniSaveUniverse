@@ -8,8 +8,8 @@ const gameCanvas = {
   canvas: canvasEl,
   context: canvasEl.getContext("2d"),
   start: function () {
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
+    // this.canvas.width = window.innerWidth;
+    // this.canvas.height = window.innerHeight;
     this.context.fillStyle = "purple";
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     //this inserts new child (in this case the canvas), before an existing node (in this case the body element)
@@ -21,6 +21,35 @@ function start() {
   gameCanvas.start();
 }
 start();
+
+
+
+const attackBtn = document.querySelector('.attackBtn')
+attackBtn.addEventListener('click', function (event) {
+    event.preventDefault()
+    //carry out shoot method
+})
+
+const retreatBtn = document.querySelector('.retreatBtn')
+retreatBtn.addEventListener('click', function (event) {
+    event.preventDefault()
+    //carry out retreat method
+})
+
+const restartBtn = document.querySelector('.restartBtn')
+restartBtn.addEventListener('click', function (event) {
+    event.preventDefault()
+    location.reload()
+    //refreshes page to start a new game
+})
+
+
+
+
+
+
+
+
 
 //creating class ship that will make all the ships
 class Ship {

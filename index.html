@@ -15,24 +15,40 @@
   </head>
   <body>
     <h1>Mini Save the Universe</h1>
+    <div class="notCanvas">
+
+      <div class="ussView">
+        <div class="ussStats">
+          <h2>USS stats</h2>
+          <div class="ussHull"><p>Hull:</p></div>
+          <div class="ussFirepower"><p>Firepower:</p></div>
+          <div class="ussAccuracy"><p>Accuracy:</p></div>
+        </div>
+      </div>
+
+      <div class="alienView">
+        <div class="alienStats">
+          <h2>Alien Stats</h2>
+          <div class="alienHull"><p>Hull:</p></div>
+          <div class="alienFirepower"><p>Firepower:</p></div>
+          <div class="alienAccuracy"><p>Accuracy:</p></div>
+        </div>
+      </div>
+
+      <div class = 'buttons'>
+        <button class = 'attackBtn'>Attack</button>
+        <button class = 'retreatBtn'>Retreat</button>
+        <button class = 'restartBtn'>Restart</button>
+      </div>
+
+      <div class="kills">
+        <h3>Confirmed Kills</h3>
+        <p>Alien ships destroyed:</p>
+      </div>
+    </div>
+
     <div class="canvas">
-      <canvas>
-        <div class="ussView left">
-          <div class="ussStats">
-            <div class="ussHull"></div>
-            <div class="ussFirepower"></div>
-            <div class="ussAccuracy"></div>
-          </div>
-        </div>
-        <div class="alienView right">
-          <div class="alienStats">
-            <div class="alienHull"></div>
-            <div class="alienFirepower"></div>
-            <div class="alienAccuracy"></div>
-          </div>
-        </div>
-        <div class="kills"></div>
-      </canvas>
+      <canvas> </canvas>
     </div>
 
     <!-- game over gif
