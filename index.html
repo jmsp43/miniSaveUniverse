@@ -1,49 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mini Save the Universe</title>
-    <link href = 'style.css' rel = 'stylesheet'>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <script defer src = 'script.js'></script>
-</head>
-<body>
-    <div class="bodyContainer">
-    
-        <div class="mainCharacterView left" >
-                <div class="nameBox">USS Schwarzenegger</div>
-                <div class="playerImage"></div>
-                <div class="playerStats">
-    
-                    Hull : 15 <br>
-                    FirePower : 5 <br>
-                    Accuracy : .7 <br>
-    
-    
-                </div>
-    
+    <link href="style.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Mini Save the Universe</h1>
+    <div class="canvas">
+      <canvas>
+        <div class="ussView left">
+          <div class="ussStats">
+            <div class="ussHull"></div>
+            <div class="ussFirepower"></div>
+            <div class="ussAccuracy"></div>
+          </div>
         </div>
-    
-    
-        <div class="mainCharacterView right">
-               
-            <div class="nameBox">Enemy</div>
-            <div class="enemyImage"></div>
-                <div class="enemyStats">
-                        Hull : 6 <br>
-                        FirePower : 3 <br>
-                        Accuracy : .6 <br>
-        
-        
-                </div>
-                
+        <div class="alienView right">
+          <div class="alienStats">
+            <div class="alienHull"></div>
+            <div class="alienFirepower"></div>
+            <div class="alienAccuracy"></div>
+          </div>
         </div>
-    
-    
-</body>
+        <div class="kills"></div>
+      </canvas>
+    </div>
+
+    <!-- game over gif
+        <div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/3IcEq6Cq9R9ErPoZIK" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/gg-good-game-galaga-3IcEq6Cq9R9ErPoZIK">via GIPHY</a></p> 
+    -->
+
+    <script src="script.js"></script>
+  </body>
 </html>
