@@ -262,13 +262,18 @@ startBtn.addEventListener("click", function (event) {
       let killCount = document.querySelector(".kills");
       killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
     }
-      
+
+    //goes through entire fleet of alien ships
     for (let i = 0; i < alienFactory.shipCollection.length; i++) {
+      //if the ship the iteration is on is not destroyed
       if (!alienFactory.shipCollection[i].isDestroyed) {
+        //that shipt is now the current alien ship in play
         activeAlienShip = alienFactory.shipCollection[i];
         break;
       }
     }
+    //checking if all alien ships are destroyed and
+    //if so, notifying you that you won
     allAliensDestroyed();
 
     retreatBtn.addEventListener("click", function (event) {
@@ -280,6 +285,6 @@ startBtn.addEventListener("click", function (event) {
   restartBtn.addEventListener("click", function (event) {
     event.preventDefault();
     location.reload();
-    //refreshes page to start a new game
+    //refreshes entire page to start a new game
   });
 });
