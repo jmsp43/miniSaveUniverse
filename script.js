@@ -4,15 +4,19 @@
 //ultimate goal is to give this game a pong feel
 const canvasEl = document.querySelector("canvas");
 const canvasWidth = 700;
-const canvasHeight = 500;
+const canvasHeight = 700;
 const gameCanvas = {
   canvas: canvasEl,
   context: canvasEl.getContext("2d"),
   start: function () {
     // this.canvas.width = window.innerWidth;
     // this.canvas.height = window.innerHeight;
-    this.context.fillStyle = "purple";
-    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    // this.context.fillStyle = "purple";
+    // this.context.fillStyle = 'nasa.jpg';
+    // let img = new Image();
+    // img.src = "./nasa.jpg";
+    // this.context.drawImage(img, 650, 650);
+    // this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
   },
 };
 
@@ -175,6 +179,10 @@ function aliensAttack(activeAlienShip) {
 function takeDamage(activeAlienShip) {
   uss1.hull -= activeAlienShip.firepower;
   if (uss1.hull <= 0) {
+    //bet you wish you retreated while you still could
+    retreatBtn.disabled = true;
+    //can't attack bc you dead
+    attackBtn.disabled = true;
     //updating updates section
     let gameUpdate = document.querySelector(".updates");
     gameUpdate.innerHTML = `<p>Game over, USS hull is destroyed. You took down ${destroyedShips.length} ships before being defeated.</p>`;
