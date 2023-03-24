@@ -21,9 +21,6 @@ const attackBtn = document.querySelector(".attackBtn");
 const restartBtn = document.querySelector(".restartBtn");
 const retreatBtn = document.querySelector(".retreatBtn");
 
-retreatBtn.style.top = "0";
-let showingRetreatOptions = false;
-
 //////////// CLASSES ////////////
 
 //creating class ship that will make all the ships
@@ -100,9 +97,9 @@ class ShipFactory {
 
 let alienFactory = new ShipFactory("alien");
 let ussFactory = new ShipFactory("uss");
-
 //x,y,width,height
 const uss1 = ussFactory.makeNewShip("uss", 20, 5, 0.7, 30, 300, 80, 80);
+let destroyedShips = [];
 
 for (i = 0; i < 6; i++) {
   alienFactory.makeNewShip(
@@ -120,12 +117,59 @@ for (i = 0; i < 6; i++) {
     100
   );
 }
-let destroyedShips = [];
-
 let activeAlienShip = alienFactory.shipCollection[0];
-// let activeAlienShip = {};
+//starts out as the first ship in collection
 
-//create update stats function and call every attack
+//////////// FUNCTIONS /////////////
+
+function start() {
+  gameCanvas.start();
+}
+
+function ussAttacks(activeAlienShip) {
+  if (Math.random() < uss1.accuracy) {
+    console.log(activeAlienShip); //stats before hit
+    let gameUpdate = document.querySelector(".updates");
+    gameUpdate.innerHTML = `<p>Direct hit!</p>`;
+    // console.log("Direct hit!");
+    activeAlienShip.hull -= uss1.firepower;
+    console.log(activeAlienShip); //stats after hit
+  } else {
+    let gameUpdate = document.querySelector(".updates");
+    gameUpdate.innerHTML = `<p>USS missed! Alien can now attack you!</p>`;
+    // console.log("USS missed! Alien can now attack you!");
+    aliensAttack(activeAlienShip);
+  }
+}
+
+function aliensAttack(activeAlienShip) {
+  if (activeAlienShip.hull > 0) {
+    if (Math.random() < activeAlienShip.accuracy) {
+      let gameUpdate = document.querySelector(".updates");
+      gameUpdate.innerHTML = `<p>Alien ship has hit USS!</p>`;
+      //   console.log("Alien ship has hit USS!");
+      takeDamage(activeAlienShip);
+    } else {
+      let gameUpdate = document.querySelector(".updates");
+      gameUpdate.innerHTML = `<p>Aliens missed! Attack them before they recover!</p>`;
+      //   console.log("Aliens missed! Attack them before they recover!");
+    }
+  } else {
+    activeAlienShip.isDestroyed = true;
+    destroyedShips.push(activeAlienShip);
+  }
+}
+
+function takeDamage(activeAlienShip) {
+  uss1.hull -= activeAlienShip.firepower;
+  if (uss1.hull <= 0) {
+    let gameUpdate = document.querySelector(".updates");
+    gameUpdate.innerHTML = `<p>Game over, hull is destroyed</p>`;
+    // console.log("Game over, hull is destroyed");
+  }
+  return;
+}
+
 function updateStats() {
   let hull = activeAlienShip.hull;
   let alienHull = document.querySelector(".alienHull");
@@ -142,63 +186,21 @@ function updateStats() {
   ussHullEl.innerHTML = `<p>Hull : ${ussHull}</p>`;
 }
 
-//////////// FUNCTIONS /////////////
-
-function start() {
-  gameCanvas.start();
-}
-
-function ussAttacks(activeAlienShip) {
-  if (Math.random() < uss1.accuracy) {
-    console.log(activeAlienShip); //stats before hit
-    console.log("Direct hit!");
-    activeAlienShip.hull -= uss1.firepower;
-    console.log(activeAlienShip); //stats after hit
-    if (activeAlienShip.hull <= 0 && allAliensDestroyed === false) {
-      console.log(
-        "Enemy is defeated. Stay and fight more if you dare, click retreat if you want to live."
-      );
-    }
-  } else {
-    console.log("USS missed! Alien can now attack you!");
-    aliensAttack(activeAlienShip);
-  }
-}
-
-function aliensAttack(activeAlienShip) {
-  if (activeAlienShip.hull > 0) {
-    if (Math.random() < activeAlienShip.accuracy) {
-      console.log("Alien ship has hit USS!");
-      takeDamage(activeAlienShip);
-    } else {
-      console.log("Aliens missed! Attack them before they recover!");
-    }
-  } else {
-    activeAlienShip.isDestroyed = true;
-    destroyedShips.push(activeAlienShip);
-  }
-}
-
-function takeDamage(activeAlienShip) {
-  uss1.hull -= activeAlienShip.firepower;
-  if (uss1.hull <= 0) {
-    console.log("Game over, hull is destroyed");
-  }
-  return;
-}
-
 function allAliensDestroyed() {
-  if (destroyedShips.length === shipCollection.length) {
-    window.alert("All alien ships are destroyed, you have won the war!");
+  if (destroyedShips.length === alienFactory.shipCollection.length) {
+    let gameUpdate = document.querySelector(".updates");
+    gameUpdate.innerHTML = `<p>All alien ships are destroyed, you have won the war!</p>`;
+    // console.log("All alien ships are destroyed, you have won the war!");
     return true;
   } else return false;
 }
 
 function retreat() {
-  console.log(
-    `Coward. Game has ended. You defeated ${destroyedShips.length} ships before chickening out.`
-  );
-  showingRetreatOptions = true;
+  let gameUpdate = document.querySelector(".updates");
+  gameUpdate.innerHTML = `<p>Coward. Game has ended. You defeated ${destroyedShips.length} ships before chickening out.</p>`;
+  //   console.log(
+  //     `Coward. Game has ended. You defeated ${destroyedShips.length} ships before chickening out.`
+  //   );
 }
 ///////////////////////////////
 
@@ -248,33 +250,62 @@ startBtn.addEventListener("click", function (event) {
 
   attackBtn.addEventListener("click", function (event) {
     event.preventDefault();
+
     ussAttacks(activeAlienShip);
+    if (activeAlienShip.hull < 0) {
+      activeAlienShip.hull = 0;
+    }
     updateStats();
 
+    if (activeAlienShip.hull <= 0) {
+      if (destroyedShips.length === 0) {
+        let gameUpdate = document.querySelector(".updates");
+        gameUpdate.innerHTML = `<p>Ship
+            ${destroyedShips.length + 1} 
+            is destroyed. Stay and fight more if you dare, click retreat if you want to live.</p>`;
+        // console.log(
+        //   "Ship " +
+        //     (destroyedShips.length + 1) +
+        //     " is destroyed. Thank you, next."
+        // );
+
+        // console.log(
+        //   "Enemy is defeated. Stay and fight more if you dare, click retreat if you want to live."
+        // );
+        destroyedShips.push(activeAlienShip);
+        activeAlienShip.isDestroyed = true;
+        let killCount = document.querySelector(".kills");
+        killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
+      } else {
+        let gameUpdate = document.querySelector(".updates");
+        gameUpdate.innerHTML = `<p>Ship
+        ${destroyedShips.length} 
+        is destroyed. Thank you, next. Stay and fight more if you dare, click retreat if you want to live.</p>`;
+        let killCount = document.querySelector(".kills");
+        killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
+        // console.log(
+        //   "Ship " + destroyedShips.length + " is destroyed. Thank you, next."
+        // );
+      }
+      if (allAliensDestroyed === false) {
+        let gameUpdate = document.querySelector(".updates");
+        gameUpdate.innerHTML = `<p>Enemy is defeated. Stay and fight more if you dare, click retreat if you want to live.</p>`;
+        // console.log(
+        //   "Enemy is defeated. Stay and fight more if you dare, click retreat if you want to live."
+        // );
+      }
+      destroyedShips.push(activeAlienShip);
+      activeAlienShip.isDestroyed = true;
+      let killCount = document.querySelector(".kills");
+      killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
+    }
     for (let i = 0; i < alienFactory.shipCollection.length; i++) {
       if (!alienFactory.shipCollection[i].isDestroyed) {
-        // console.log(activeAlienShip.isDestroyed);
         activeAlienShip = alienFactory.shipCollection[i];
         break;
       }
     }
-    if (activeAlienShip.hull <= 0) {
-      if (destroyedShips.length === 0) {
-        console.log(
-          "Ship " +
-            (destroyedShips.length + 1) +
-            " is destroyed. Thank you, next."
-        );
-        destroyedShips.push(activeAlienShip);
-        activeAlienShip.isDestroyed = true;
-      } else
-        console.log(
-          "Ship " + destroyedShips.length + " is destroyed. Thank you, next."
-        );
-      destroyedShips.push(activeAlienShip);
-      activeAlienShip.isDestroyed = true;
-    }
-
+    allAliensDestroyed();
     retreatBtn.addEventListener("click", function (event) {
       event.preventDefault();
       retreat();
