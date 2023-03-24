@@ -127,7 +127,6 @@ function start() {
 }
 
 function ussAttacks(activeAlienShip) {
-  updateStats();
   if (Math.random() < uss1.accuracy) {
     console.log(activeAlienShip); //stats before hit
     let gameUpdate = document.querySelector(".updates");
@@ -139,11 +138,9 @@ function ussAttacks(activeAlienShip) {
     gameUpdate.innerHTML = `<p>USS missed! Alien can now attack you!</p>`;
     aliensAttack(activeAlienShip);
   }
-  updateStats();
 }
 
 function aliensAttack(activeAlienShip) {
-  updateStats();
   if (activeAlienShip.hull > 0) {
     if (Math.random() < activeAlienShip.accuracy) {
       let gameUpdate = document.querySelector(".updates");
@@ -157,7 +154,6 @@ function aliensAttack(activeAlienShip) {
     activeAlienShip.isDestroyed = true;
     destroyedShips.push(activeAlienShip);
   }
-  updateStats();
 }
 
 function takeDamage(activeAlienShip) {
@@ -209,6 +205,7 @@ startBtn.addEventListener("click", function (event) {
 
   attackBtn.addEventListener("click", function (event) {
     event.preventDefault();
+    updateStats();
 
     ussAttacks(activeAlienShip);
     if (activeAlienShip.hull < 0) {
