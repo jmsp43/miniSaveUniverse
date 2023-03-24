@@ -122,35 +122,48 @@ let activeAlienShip = alienFactory.shipCollection[0];
 
 //////////// FUNCTIONS /////////////
 
+//starts the game and canvas
 function start() {
   gameCanvas.start();
 }
 
+//uss attacks current alien ship
 function ussAttacks(activeAlienShip) {
+  //hit
   if (Math.random() < uss1.accuracy) {
     console.log(activeAlienShip); //stats before hit
+    //updating updates section
     let gameUpdate = document.querySelector(".updates");
     gameUpdate.innerHTML = `<p>Direct hit!</p>`;
+    //alien hull decreases by uss firepower
     activeAlienShip.hull -= uss1.firepower;
     console.log(activeAlienShip); //stats after hit
   } else {
+    //miss
     let gameUpdate = document.querySelector(".updates");
     gameUpdate.innerHTML = `<p>USS missed! Alien can now attack you!</p>`;
+    //calling alien attacking uss func
     aliensAttack(activeAlienShip);
   }
 }
 
+//alien attacking uss
 function aliensAttack(activeAlienShip) {
   if (activeAlienShip.hull > 0) {
+    //alien hits uss
     if (Math.random() < activeAlienShip.accuracy) {
+      //updating updates section
       let gameUpdate = document.querySelector(".updates");
       gameUpdate.innerHTML = `<p>Alien ship has hit USS!</p>`;
+      //uss hull takes damage
       takeDamage(activeAlienShip);
     } else {
       let gameUpdate = document.querySelector(".updates");
       gameUpdate.innerHTML = `<p>Aliens missed! Attack them before they recover!</p>`;
     }
   } else {
+    //if alien hull is 0 or less, it is destroyed.
+    //store in destroyed ships array
     activeAlienShip.isDestroyed = true;
     destroyedShips.push(activeAlienShip);
   }
@@ -217,9 +230,15 @@ startBtn.addEventListener("click", function (event) {
       if (destroyedShips.length === 0) {
         let gameUpdate = document.querySelector(".updates");
         gameUpdate.innerHTML = `<p>Ship
-            ${destroyedShips.length + 1} 
+            ${destroyedShips.length} 
             is destroyed. Stay and fight more if you dare, click retreat if you want to live.</p>`;
-        destroyedShips.push(activeAlienShip);
+          
+          console.log('testing destroyed ships array')
+          console.log(destroyedShips)
+          destroyedShips.push(activeAlienShip);
+          console.log(destroyedShips)
+
+
         activeAlienShip.isDestroyed = true;
         let killCount = document.querySelector(".kills");
         killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
@@ -242,7 +261,7 @@ startBtn.addEventListener("click", function (event) {
         killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
       } else {
         killCount.innerHTML = `<p>You have defeated ${
-          destroyedShips.length - 1
+          destroyedShips.length
         } alien ships so far.</p>`;
       }
     }

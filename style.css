@@ -7,7 +7,7 @@
 body{
     margin: 20px;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     background-color: black;
     color: white;
 }
@@ -22,11 +22,14 @@ body{
 }
 
 .notCanvas{
-    /* padding:100px; */
-    float: left;
+    /* padding:100px; 
+    float: left;  */
+    
+    flex:1;
 }
 
 .views{
+    display: flex;
     margin-top: 50px;
 }
 
@@ -65,16 +68,23 @@ body{
     margin: 10px;
 }
 
+.btnsKillsUpdates{
+    display: flex;
+    flex-direction: column;
+}
+
 .updates{
     padding: 20px;
 }
 
 canvas{
+    margin-top: 50px;
     border:3px solid chartreuse;
     /* background-color: #be32e5; */
     width: 500px;
     height: 500px;
-    float: right;
+    /* float: right; */
+    flex: 1;
 }
 
 .buttons{
