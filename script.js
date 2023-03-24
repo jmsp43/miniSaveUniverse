@@ -98,7 +98,7 @@ class ShipFactory {
 let alienFactory = new ShipFactory("alien");
 let ussFactory = new ShipFactory("uss");
 //x,y,width,height
-const uss1 = ussFactory.makeNewShip("uss", 20, 5, 0.7, 30, 300, 80, 80);
+const uss1 = ussFactory.makeNewShip("uss", 20, 5, 0.3, 30, 300, 80, 80);
 let destroyedShips = [];
 
 for (i = 0; i < 6; i++) {
@@ -141,6 +141,7 @@ function ussAttacks(activeAlienShip) {
   } else {
     //miss
     let gameUpdate = document.querySelector(".updates");
+    //updating update section
     gameUpdate.innerHTML = `<p>USS missed! Alien can now attack you!</p>`;
     //calling alien attacking uss func
     aliensAttack(activeAlienShip);
@@ -158,6 +159,7 @@ function aliensAttack(activeAlienShip) {
       //uss hull takes damage
       takeDamage(activeAlienShip);
     } else {
+      //updating updates section
       let gameUpdate = document.querySelector(".updates");
       gameUpdate.innerHTML = `<p>Aliens missed! Attack them before they recover!</p>`;
     }
@@ -169,16 +171,19 @@ function aliensAttack(activeAlienShip) {
   }
 }
 
+//func to update decrement uss hull by alien firepower
 function takeDamage(activeAlienShip) {
   uss1.hull -= activeAlienShip.firepower;
   if (uss1.hull <= 0) {
+    //updating updates section
     let gameUpdate = document.querySelector(".updates");
-    gameUpdate.innerHTML = `<p>Game over, hull is destroyed</p>`;
+    gameUpdate.innerHTML = `<p>Game over, USS hull is destroyed. You took down ${destroyedShips.length} ships before being defeated.</p>`;
   }
   return;
 }
 
 function updateStats() {
+  //updating stats in real time
   let hull = activeAlienShip.hull;
   let alienHull = document.querySelector(".alienHull");
   alienHull.innerHTML = `<p>Hull : ${hull}</p>`;
@@ -187,7 +192,7 @@ function updateStats() {
   alienFirepower.innerHTML = `<p>FirePower : ${firepower}</p>`;
   let accuracy = activeAlienShip.accuracy;
   let alienAccuracy = document.querySelector(".alienAccuracy");
-  alienAccuracy.innerHTML = `<p>Accuracy : ${accuracy}</p>`;
+  alienAccuracy.innerHTML = `<p>Accuracy : ${accuracy * 100}%</p>`;
 
   let ussHull = uss1.hull;
   let ussHullEl = document.querySelector(".ussHull");
@@ -195,14 +200,19 @@ function updateStats() {
 }
 
 function allAliensDestroyed() {
+  //if all the ships in the alien fleet are destroyed
   if (destroyedShips.length === alienFactory.shipCollection.length) {
+    //update updates section to reflect win
     let gameUpdate = document.querySelector(".updates");
     gameUpdate.innerHTML = `<p>All alien ships are destroyed, you have won the war!</p>`;
     return true;
-  } else return false;
+  } else {
+    return false;
+  }
 }
 
 function retreat() {
+  //update user how many ships they destroyed before retreating
   let gameUpdate = document.querySelector(".updates");
   gameUpdate.innerHTML = `<p>Coward. Game has ended. You defeated ${destroyedShips.length} ships before chickening out.</p>`;
 }
@@ -212,45 +222,47 @@ function retreat() {
 
 //////////// EVENT LISTENERS ////////////
 
+//click start to call start func and be able to click any other buttons
 startBtn.addEventListener("click", function (event) {
   event.preventDefault();
   start();
+  //can't click start while already playing
+  startBtn.disabled = true;
+  // if (startBtn.disabled = true) {
+  //     startBtn.visibility = 'hidden'
+  // }
 
+  //must attack at least once before retreating or restarting
   attackBtn.addEventListener("click", function (event) {
     event.preventDefault();
+    //update stats before attack carries out
     updateStats();
 
+    //call attack funcs
     ussAttacks(activeAlienShip);
+    //if hull is less than zero, just make it zero
     if (activeAlienShip.hull < 0) {
       activeAlienShip.hull = 0;
+    } else if (uss1.hull < 0) {
+      uss1.hull = 0;
     }
+    //update stats after attack carries out
     updateStats();
 
     if (activeAlienShip.hull <= 0) {
+      //current ship is destroyed, add to destroyed array
+      destroyedShips.push(activeAlienShip);
+      activeAlienShip.isDestroyed = true;
+      //update update section
       let gameUpdate = document.querySelector(".updates");
       gameUpdate.innerHTML = `<p>Ship
-            ${destroyedShips.length+1} 
-            is destroyed. Stay and fight more if you dare, click retreat if you want to live.</p>`;
-
-      console.log("testing destroyed ships array");
-      console.log(destroyedShips);
-      destroyedShips.push(activeAlienShip);
-      console.log(destroyedShips);
-
-      activeAlienShip.isDestroyed = true;
+              ${destroyedShips.length} 
+              is destroyed. Stay and fight more if you dare, click retreat if you want to live.</p>`;
+      //update kill box
       let killCount = document.querySelector(".kills");
       killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
-      if (allAliensDestroyed === false) {
-        let gameUpdate = document.querySelector(".updates");
-        gameUpdate.innerHTML = `<p>Enemy is defeated. Stay and fight more if you dare, click retreat if you want to live.</p>`;
-      }
-      activeAlienShip.isDestroyed = true;
-      if (destroyedShips.length === 0) {
-        killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
-      } else {
-        killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
-      }
     }
+      
     for (let i = 0; i < alienFactory.shipCollection.length; i++) {
       if (!alienFactory.shipCollection[i].isDestroyed) {
         activeAlienShip = alienFactory.shipCollection[i];
@@ -258,6 +270,7 @@ startBtn.addEventListener("click", function (event) {
       }
     }
     allAliensDestroyed();
+
     retreatBtn.addEventListener("click", function (event) {
       event.preventDefault();
       retreat();
