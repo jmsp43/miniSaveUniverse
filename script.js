@@ -227,42 +227,28 @@ startBtn.addEventListener("click", function (event) {
     updateStats();
 
     if (activeAlienShip.hull <= 0) {
-      if (destroyedShips.length === 0) {
-        let gameUpdate = document.querySelector(".updates");
-        gameUpdate.innerHTML = `<p>Ship
-            ${destroyedShips.length} 
+      let gameUpdate = document.querySelector(".updates");
+      gameUpdate.innerHTML = `<p>Ship
+            ${destroyedShips.length+1} 
             is destroyed. Stay and fight more if you dare, click retreat if you want to live.</p>`;
-          
-          console.log('testing destroyed ships array')
-          console.log(destroyedShips)
-          destroyedShips.push(activeAlienShip);
-          console.log(destroyedShips)
 
+      console.log("testing destroyed ships array");
+      console.log(destroyedShips);
+      destroyedShips.push(activeAlienShip);
+      console.log(destroyedShips);
 
-        activeAlienShip.isDestroyed = true;
-        let killCount = document.querySelector(".kills");
-        killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
-      } else {
-        let gameUpdate = document.querySelector(".updates");
-        gameUpdate.innerHTML = `<p>Ship
-        ${destroyedShips.length} 
-        is destroyed. Thank you, next. Stay and fight more if you dare, click retreat if you want to live.</p>`;
-        let killCount = document.querySelector(".kills");
-        killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
-      }
+      activeAlienShip.isDestroyed = true;
+      let killCount = document.querySelector(".kills");
+      killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
       if (allAliensDestroyed === false) {
         let gameUpdate = document.querySelector(".updates");
         gameUpdate.innerHTML = `<p>Enemy is defeated. Stay and fight more if you dare, click retreat if you want to live.</p>`;
       }
-      destroyedShips.push(activeAlienShip);
       activeAlienShip.isDestroyed = true;
-      let killCount = document.querySelector(".kills");
       if (destroyedShips.length === 0) {
         killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
       } else {
-        killCount.innerHTML = `<p>You have defeated ${
-          destroyedShips.length
-        } alien ships so far.</p>`;
+        killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
       }
     }
     for (let i = 0; i < alienFactory.shipCollection.length; i++) {
