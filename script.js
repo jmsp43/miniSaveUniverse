@@ -131,13 +131,11 @@ function ussAttacks(activeAlienShip) {
     console.log(activeAlienShip); //stats before hit
     let gameUpdate = document.querySelector(".updates");
     gameUpdate.innerHTML = `<p>Direct hit!</p>`;
-    // console.log("Direct hit!");
     activeAlienShip.hull -= uss1.firepower;
     console.log(activeAlienShip); //stats after hit
   } else {
     let gameUpdate = document.querySelector(".updates");
     gameUpdate.innerHTML = `<p>USS missed! Alien can now attack you!</p>`;
-    // console.log("USS missed! Alien can now attack you!");
     aliensAttack(activeAlienShip);
   }
 }
@@ -147,12 +145,10 @@ function aliensAttack(activeAlienShip) {
     if (Math.random() < activeAlienShip.accuracy) {
       let gameUpdate = document.querySelector(".updates");
       gameUpdate.innerHTML = `<p>Alien ship has hit USS!</p>`;
-      //   console.log("Alien ship has hit USS!");
       takeDamage(activeAlienShip);
     } else {
       let gameUpdate = document.querySelector(".updates");
       gameUpdate.innerHTML = `<p>Aliens missed! Attack them before they recover!</p>`;
-      //   console.log("Aliens missed! Attack them before they recover!");
     }
   } else {
     activeAlienShip.isDestroyed = true;
@@ -165,7 +161,6 @@ function takeDamage(activeAlienShip) {
   if (uss1.hull <= 0) {
     let gameUpdate = document.querySelector(".updates");
     gameUpdate.innerHTML = `<p>Game over, hull is destroyed</p>`;
-    // console.log("Game over, hull is destroyed");
   }
   return;
 }
@@ -190,7 +185,6 @@ function allAliensDestroyed() {
   if (destroyedShips.length === alienFactory.shipCollection.length) {
     let gameUpdate = document.querySelector(".updates");
     gameUpdate.innerHTML = `<p>All alien ships are destroyed, you have won the war!</p>`;
-    // console.log("All alien ships are destroyed, you have won the war!");
     return true;
   } else return false;
 }
@@ -198,47 +192,8 @@ function allAliensDestroyed() {
 function retreat() {
   let gameUpdate = document.querySelector(".updates");
   gameUpdate.innerHTML = `<p>Coward. Game has ended. You defeated ${destroyedShips.length} ships before chickening out.</p>`;
-  //   console.log(
-  //     `Coward. Game has ended. You defeated ${destroyedShips.length} ships before chickening out.`
-  //   );
 }
 ///////////////////////////////
-
-// if (linkObj.hasOwnProperty("subLinks") == true) {
-//     showingSubMenu = true;
-//   } else {
-//     showingSubMenu = false;
-//     mainEl.innerHTML = `<h1>${event.target.textContent}</h1`;
-//   }
-//   if (showingSubMenu === true) {
-//     function buildSubMenu(subLinksArr) {
-//       subMenuEl.innerHTML = "";
-//       subLinksArr.forEach((linkObj) => {
-//         const subA = document.createElement("a");
-//         subA.href = linkObj.href;
-//         subA.textContent = linkObj.text;
-//         subMenuEl.appendChild(subA);
-//       });
-//     }
-//     buildSubMenu(subLinksArr);
-//     subMenuEl.style.top = "100%";
-//   } else {
-//     subMenuEl.style.top = "0";
-//   }
-
-//   subMenuEl.addEventListener("click", function (event) {
-//     event.preventDefault();
-//     if (event.target.tagName !== "A") {
-//       return;
-//     }
-//     console.log(event.target.textContent);
-//     showingSubMenu = false;
-//     subMenuEl.style.top = "0";
-//     for (let i = 0; i < topMenuLinks.length; i++) {
-//       topMenuLinks[i].classList.remove("active");
-//     }
-//     mainEl.innerHTML = `<h1>${event.target.textContent}</h1`;
-//   });
 
 //////////////////////////////////////////
 
@@ -263,15 +218,6 @@ startBtn.addEventListener("click", function (event) {
         gameUpdate.innerHTML = `<p>Ship
             ${destroyedShips.length + 1} 
             is destroyed. Stay and fight more if you dare, click retreat if you want to live.</p>`;
-        // console.log(
-        //   "Ship " +
-        //     (destroyedShips.length + 1) +
-        //     " is destroyed. Thank you, next."
-        // );
-
-        // console.log(
-        //   "Enemy is defeated. Stay and fight more if you dare, click retreat if you want to live."
-        // );
         destroyedShips.push(activeAlienShip);
         activeAlienShip.isDestroyed = true;
         let killCount = document.querySelector(".kills");
@@ -283,21 +229,19 @@ startBtn.addEventListener("click", function (event) {
         is destroyed. Thank you, next. Stay and fight more if you dare, click retreat if you want to live.</p>`;
         let killCount = document.querySelector(".kills");
         killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
-        // console.log(
-        //   "Ship " + destroyedShips.length + " is destroyed. Thank you, next."
-        // );
       }
       if (allAliensDestroyed === false) {
         let gameUpdate = document.querySelector(".updates");
         gameUpdate.innerHTML = `<p>Enemy is defeated. Stay and fight more if you dare, click retreat if you want to live.</p>`;
-        // console.log(
-        //   "Enemy is defeated. Stay and fight more if you dare, click retreat if you want to live."
-        // );
       }
       destroyedShips.push(activeAlienShip);
       activeAlienShip.isDestroyed = true;
-      let killCount = document.querySelector(".kills");
-      killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
+        let killCount = document.querySelector(".kills");
+        if (destroyedShips.length === 0) {
+            killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
+        } else {
+            killCount.innerHTML = `<p>You have defeated ${destroyedShips.length - 1} alien ships so far.</p>`;
+        }
     }
     for (let i = 0; i < alienFactory.shipCollection.length; i++) {
       if (!alienFactory.shipCollection[i].isDestroyed) {
