@@ -127,6 +127,7 @@ function start() {
 }
 
 function ussAttacks(activeAlienShip) {
+  updateStats();
   if (Math.random() < uss1.accuracy) {
     console.log(activeAlienShip); //stats before hit
     let gameUpdate = document.querySelector(".updates");
@@ -138,9 +139,11 @@ function ussAttacks(activeAlienShip) {
     gameUpdate.innerHTML = `<p>USS missed! Alien can now attack you!</p>`;
     aliensAttack(activeAlienShip);
   }
+  updateStats();
 }
 
 function aliensAttack(activeAlienShip) {
+  updateStats();
   if (activeAlienShip.hull > 0) {
     if (Math.random() < activeAlienShip.accuracy) {
       let gameUpdate = document.querySelector(".updates");
@@ -154,6 +157,7 @@ function aliensAttack(activeAlienShip) {
     activeAlienShip.isDestroyed = true;
     destroyedShips.push(activeAlienShip);
   }
+  updateStats();
 }
 
 function takeDamage(activeAlienShip) {
@@ -236,12 +240,14 @@ startBtn.addEventListener("click", function (event) {
       }
       destroyedShips.push(activeAlienShip);
       activeAlienShip.isDestroyed = true;
-        let killCount = document.querySelector(".kills");
-        if (destroyedShips.length === 0) {
-            killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
-        } else {
-            killCount.innerHTML = `<p>You have defeated ${destroyedShips.length - 1} alien ships so far.</p>`;
-        }
+      let killCount = document.querySelector(".kills");
+      if (destroyedShips.length === 0) {
+        killCount.innerHTML = `<p>You have defeated ${destroyedShips.length} alien ships so far.</p>`;
+      } else {
+        killCount.innerHTML = `<p>You have defeated ${
+          destroyedShips.length - 1
+        } alien ships so far.</p>`;
+      }
     }
     for (let i = 0; i < alienFactory.shipCollection.length; i++) {
       if (!alienFactory.shipCollection[i].isDestroyed) {

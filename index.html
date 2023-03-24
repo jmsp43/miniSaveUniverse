@@ -14,58 +14,57 @@
     />
   </head>
   <body>
-    <h1>Mini Save the Universe</h1>
-    <div class="everything-except-h1">
-      <div class="notCanvas">
-        <div class="views">
-          <div class="ussView">
-            <div class="ussStats">
-              <h2>USS stats</h2>
-              <div class="ussHull"><p>Hull: 20</p></div>
-              <div class="ussFirepower"><p>Firepower: 5</p></div>
-              <div class="ussAccuracy"><p>Accuracy: .7</p></div>
-            </div>
-          </div>
-
-          <div class="alienView">
-            <div class="alienStats">
-              <h2>Alien Stats</h2>
-              <div class="alienHull"><p>Hull: 3 - 6</p></div>
-              <div class="alienFirepower"><p>Firepower: 2 - 4</p></div>
-              <div class="alienAccuracy"><p>Accuracy: 60% - 80%</p></div>
-            </div>
+    <div class="notCanvas">
+      <div class="title"><h1>Mini Save the Universe</h1></div>
+      <div class="views">
+        <div class="ussView">
+          <div class="ussStats">
+            <h3>USS stats</h3>
+            <div class="ussHull"><p>Hull: 20</p></div>
+            <div class="ussFirepower"><p>Firepower: 5</p></div>
+            <div class="ussAccuracy"><p>Accuracy: .7</p></div>
           </div>
         </div>
 
-        <div class="btnsKillsUpdates">
-          <div class="buttons">
-            <button class="startBtn">Start Game</button>
-            <button class="attackBtn">Attack</button>
-            <button class="retreatBtn">Retreat</button>
-            <button class="restartBtn">Restart</button>
-          </div>
-
-          <div class="killsBox">
-            <h3>Confirmed Kills</h3>
-            <div class="kills">
-              <p>Alien ships destroyed:</p>
-            </div>
-          </div>
-
-          <div class="updates">
-            <h3>Happening Now</h3>
-            <p>Update:</p>
+        <div class="alienView">
+          <div class="alienStats">
+            <h3>Alien Stats</h3>
+            <div class="alienHull"><p>Hull: 3 - 6</p></div>
+            <div class="alienFirepower"><p>Firepower: 2 - 4</p></div>
+            <div class="alienAccuracy"><p>Accuracy: 60% - 80%</p></div>
           </div>
         </div>
       </div>
 
-      <div class="canvas">
-        <canvas> </canvas>
-      </div>
+      <div class="btnsKillsUpdates">
+        <div class="buttons">
+          <button class="startBtn">Start Game</button>
+          <button class="attackBtn">Attack</button>
+          <button class="retreatBtn">Retreat</button>
+          <button class="restartBtn">Restart</button>
+        </div>
 
-      <!-- game over gif
+        <div class="killsBox">
+          <h2>Confirmed Kills</h2>
+          <div class="kills">
+            <p>Alien ships destroyed:</p>
+          </div>
+        </div>
+
+        <div class="updates">
+          <h3>Happening Now</h3>
+          <p>Update:</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="canvas">
+      <canvas> </canvas>
+    </div>
+
+    <!-- game over gif
         <div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/3IcEq6Cq9R9ErPoZIK" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/gg-good-game-galaga-3IcEq6Cq9R9ErPoZIK">via GIPHY</a></p> 
-    --></div>
+    -->
     <script src="script.js"></script>
   </body>
 </html>
