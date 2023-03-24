@@ -9,14 +9,9 @@ const gameCanvas = {
   canvas: canvasEl,
   context: canvasEl.getContext("2d"),
   start: function () {
-    // this.canvas.width = window.innerWidth;
-    // this.canvas.height = window.innerHeight;
-    // this.context.fillStyle = "purple";
-    // this.context.fillStyle = 'nasa.jpg';
     // let img = new Image();
     // img.src = "./nasa.jpg";
     // this.context.drawImage(img, 650, 650);
-    // this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
   },
 };
 
@@ -105,6 +100,7 @@ let ussFactory = new ShipFactory("uss");
 const uss1 = ussFactory.makeNewShip("uss", 20, 5, 0.3, 30, 300, 80, 80);
 let destroyedShips = [];
 
+//6 alien ships
 for (i = 0; i < 6; i++) {
   alienFactory.makeNewShip(
     "alien",
@@ -236,9 +232,6 @@ startBtn.addEventListener("click", function (event) {
   start();
   //can't click start while already playing
   startBtn.disabled = true;
-  // if (startBtn.disabled = true) {
-  //     startBtn.visibility = 'hidden'
-  // }
 
   //must attack at least once before retreating or restarting
   attackBtn.addEventListener("click", function (event) {
@@ -284,6 +277,7 @@ startBtn.addEventListener("click", function (event) {
     //if so, notifying you that you won
     allAliensDestroyed();
 
+      //coward's way out
     retreatBtn.addEventListener("click", function (event) {
       event.preventDefault();
       retreat();
