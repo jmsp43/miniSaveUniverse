@@ -144,7 +144,10 @@ function ussAttacks(activeAlienShip) {
     //updating update section
     gameUpdate.innerHTML = `<p>USS missed! Alien can now attack you!</p>`;
     //calling alien attacking uss func
-    aliensAttack(activeAlienShip);
+      //implement time delay so user can see both messages
+      //that you missed and the message that will display when aliens attack func is called
+      setTimeout(()=>{aliensAttack(activeAlienShip);}, 1500);
+    // aliensAttack(activeAlienShip);
   }
 }
 
